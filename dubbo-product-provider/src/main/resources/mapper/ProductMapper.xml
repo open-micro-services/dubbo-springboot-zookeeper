@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boonya.dubbo.product.provider.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.boonya.dubbo.product.api.entity.Product" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="categroy" property="categroy" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, categroy, price, discount, address
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.boonya.dubbo.product.api.entity.Product" >
+    insert into product (id, name, categroy, 
+      price, discount, address
+      )
+    values (#{pro.id,jdbcType=VARCHAR}, #{pro.name,jdbcType=VARCHAR}, #{pro.categroy,jdbcType=VARCHAR},
+      #{pro.price,jdbcType=DECIMAL}, #{pro.discount,jdbcType=DECIMAL}, #{pro.address,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.boonya.dubbo.product.api.entity.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pro.id != null" >
+        id,
+      </if>
+      <if test="pro.name != null" >
+        name,
+      </if>
+      <if test="pro.categroy != null" >
+        categroy,
+      </if>
+      <if test="pro.price != null" >
+        price,
+      </if>
+      <if test="pro.discount != null" >
+        discount,
+      </if>
+      <if test="pro.address != null" >
+        address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pro.id != null" >
+        #{pro.id,jdbcType=VARCHAR},
+      </if>
+      <if test="pro.name != null" >
+        #{pro.name,jdbcType=VARCHAR},
+      </if>
+      <if test="pro.categroy != null" >
+        #{pro.categroy,jdbcType=VARCHAR},
+      </if>
+      <if test="pro.price != null" >
+        #{pro.price,jdbcType=DECIMAL},
+      </if>
+      <if test="pro.discount != null" >
+        #{pro.discount,jdbcType=DECIMAL},
+      </if>
+      <if test="pro.address != null" >
+        #{pro.address,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boonya.dubbo.product.api.entity.Product" >
+    update product
+    <set >
+      <if test="pro.name != null" >
+        name = #{pro.name,jdbcType=VARCHAR},
+      </if>
+      <if test="pro.categroy != null" >
+        categroy = #{pro.categroy,jdbcType=VARCHAR},
+      </if>
+      <if test="pro.price != null" >
+        price = #{pro.price,jdbcType=DECIMAL},
+      </if>
+      <if test="pro.discount != null" >
+        discount = #{pro.discount,jdbcType=DECIMAL},
+      </if>
+      <if test="pro.address != null" >
+        address = #{pro.address,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{pro.id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boonya.dubbo.product.api.entity.Product" >
+    update product
+    set name = #{pro.name,jdbcType=VARCHAR},
+      categroy = #{pro.categroy,jdbcType=VARCHAR},
+      price = #{pro.price,jdbcType=DECIMAL},
+      discount = #{pro.discount,jdbcType=DECIMAL},
+      address = #{pro.address,jdbcType=VARCHAR}
+    where id = #{pro.id,jdbcType=VARCHAR}
+  </update>
+</mapper>
